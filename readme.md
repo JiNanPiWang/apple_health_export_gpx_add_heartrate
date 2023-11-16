@@ -1,4 +1,7 @@
-### 中文版（[English version](#English)）：
+## 中文版（[English version](#English)）：
+#### 使用方法
+1. 将导出文件夹中的apple_health_export复制到根目录中
+
 #### 起因：
 
 使用苹果健康导出的gpx文件，不包含心率信息，但实际上如果使用的是苹果手表记录活动，在/apple_health_export/导出.xml中包含了手表记录的心率信息。
@@ -35,7 +38,11 @@
 </trkpt>
 ```
 
-### English:
+
+## English:
+#### How to use
+1. Copy the apple health export in the export folder to root directory
+
 #### cause:
 
 The gpx file exported using Apple Health does not contain heart rate information. However, if an Apple Watch is actually used to record activities, /apple_health_export/export.xml contains the heart rate information recorded by the watch.
