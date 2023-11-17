@@ -1,6 +1,7 @@
 # My custom files
 apple_health_export
 ideas.txt
+.fleet
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
