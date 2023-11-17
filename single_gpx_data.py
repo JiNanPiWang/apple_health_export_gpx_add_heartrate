@@ -18,13 +18,10 @@ class SingleGpxData:
         self.cad = cad  # cadence
 
         # 解析日期时间字符串
-        self.datetime = self.parse_datetime(time) if time else None
-
-        # 记录原始时区偏移量
-        # self.original_timezone_offset = self.get_timezone_offset(self.datetime) if self.datetime else None
+        self.datetime_origin = self.parse_datetime(time) if time else None
 
         # 转换到UTC+0时区
-        self.datetime_utc0 = self.convert_to_utc0(self.datetime) if self.datetime else None
+        self.datetime_utc0 = self.convert_to_utc0(self.datetime_origin) if self.datetime_origin else None
 
         # 提取日期和时间部分
         self.date_part = self.datetime_utc0.strftime("%Y-%m-%d") if self.datetime_utc0 else None
@@ -59,6 +56,9 @@ class SingleGpxData:
     def convert_to_utc0(dt):
         if dt:
             # 转换到UTC+0时区
-            dt_utc0 = dt.astimezone(timezone.utc)
-            return dt_utc0
+            if dt.tzinfo:
+                dt_utc0 = dt.astimezone(timezone.utc)
+                return dt_utc0
+            else:
+                return dt
         return None
