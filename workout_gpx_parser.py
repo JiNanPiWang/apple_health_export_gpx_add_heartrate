@@ -15,7 +15,7 @@ class WorkoutGpxParser:
         self.path = os.path.dirname(__file__)
 
         # gpx路径
-        self.workout_gpx_path = f'{self.path}/apple_health_export/workout-routes/{workout_gpx_name}'
+        self.workout_gpx_path = os.path.join(self.path, 'apple_health_export/workout-routes', workout_gpx_name)
 
         # 获取GPX的信息
         self.tree = ET.parse(self.workout_gpx_path)
