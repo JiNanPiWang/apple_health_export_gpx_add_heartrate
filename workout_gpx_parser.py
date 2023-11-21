@@ -23,7 +23,7 @@ class WorkoutGpxParser:
         self.namespace = {'gpx': 'http://www.topografix.com/GPX/1/1'}
 
     # 获取GPX的所有数据（生成器）
-    def parse_data(self):
+    def get_full_data(self):
         for trkpt in self.root.findall('.//gpx:trkpt', self.namespace):
             lon = trkpt.attrib['lon']
             lat = trkpt.attrib['lat']
@@ -39,43 +39,61 @@ class WorkoutGpxParser:
                 if trkpt.find('gpx:extensions/gpx:vAcc', self.namespace) is not None else "N/A"
             yield lon, lat, ele, time, speed, course, hAcc, vAcc
 
+    # 获取GPX的所有数据（生成器）
+    def get_full_data_in_dict(self):
+        for trkpt in self.root.findall('.//gpx:trkpt', self.namespace):
+            lon = trkpt.attrib['lon']
+            lat = trkpt.attrib['lat']
+            ele = trkpt.find('gpx:ele', self.namespace).text
+            time = trkpt.find('gpx:time', self.namespace).text
+            speed = trkpt.find('gpx:extensions/gpx:speed', self.namespace).text \
+                    if trkpt.find('gpx:extensions/gpx:speed', self.namespace) is not None else "N/A"
+            course = trkpt.find('gpx:extensions/gpx:course', self.namespace).text \
+                     if trkpt.find('gpx:extensions/gpx:course', self.namespace) is not None else "N/A"
+            hAcc = trkpt.find('gpx:extensions/gpx:hAcc', self.namespace).text \
+                   if trkpt.find('gpx:extensions/gpx:hAcc', self.namespace) is not None else "N/A"
+            vAcc = trkpt.find('gpx:extensions/gpx:vAcc', self.namespace).text \
+                   if trkpt.find('gpx:extensions/gpx:vAcc', self.namespace) is not None else "N/A"
+            yield {'lon': lon, 'lat': lat, 'ele': ele, 'time': time, 'speed': speed, 'course': course,
+                   'hAcc': hAcc, 'vAcc': vAcc}
+
     # 单独获取GPX的数据
     def get_lon_data(self):
-        for trkpt in self.parse_data():
+        for trkpt in self.get_full_data():
             lon, _, _, _, _, _, _, _ = trkpt
             yield lon
 
     def get_lat_data(self):
-        for trkpt in self.parse_data():
+        for trkpt in self.get_full_data():
             _, lat, _, _, _, _, _, _ = trkpt
             yield lat
 
     def get_elevation_data(self):
-        for trkpt in self.parse_data():
+        for trkpt in self.get_full_data():
             _, _, ele, _, _, _, _, _ = trkpt
             yield ele
 
     def get_time_data(self):
-        for trkpt in self.parse_data():
+        for trkpt in self.get_full_data():
             _, _, _, time, _, _, _, _ = trkpt
             yield time
 
     def get_speed_data(self):
-        for trkpt in self.parse_data():
+        for trkpt in self.get_full_data():
             _, _, _, _, speed, _, _, _ = trkpt
             yield speed
 
     def get_course_data(self):
-        for trkpt in self.parse_data():
+        for trkpt in self.get_full_data():
             _, _, _, _, _, course, _, _ = trkpt
             yield course
 
     def get_hAcc_data(self):
-        for trkpt in self.parse_data():
+        for trkpt in self.get_full_data():
             _, _, _, _, _, _, hAcc, _ = trkpt
             yield hAcc
 
     def get_vAcc_data(self):
-        for trkpt in self.parse_data():
+        for trkpt in self.get_full_data():
             _, _, _, _, _, _, _, vAcc = trkpt
             yield vAcc
