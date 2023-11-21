@@ -18,7 +18,8 @@ class WorkoutGpxParser:
         self.workout_gpx_path = os.path.join(self.path, 'apple_health_export/workout-routes', workout_gpx_name)
 
         # 获取GPX的信息
-        self.tree = ET.parse(self.workout_gpx_path)
+        with open(self.workout_gpx_path, 'r') as gpx_file:
+            self.tree = ET.parse(gpx_file)
         self.root = self.tree.getroot()
         self.namespace = {'gpx': 'http://www.topografix.com/GPX/1/1'}
 
