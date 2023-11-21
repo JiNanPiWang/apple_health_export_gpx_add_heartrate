@@ -1,11 +1,14 @@
 import unittest
+import datetime
+
 from workout_gpx_parser import WorkoutGpxParser
+from single_gpx_data import SingleGpxData
 
 
 class TestWorkoutGpxParser(unittest.TestCase):
     def test_parse_data(self):
         parser = WorkoutGpxParser('route_2019-10-03_8.53am.gpx')
-        for i, data_point in enumerate(parser.parse_data(), start=1):
+        for i, data_point in enumerate(parser.get_full_data(), start=1):
             if i == 4:
                 lon, lat, ele, time, speed, course, hAcc, vAcc = data_point
                 self.assertEqual(lon, "114.305786")
@@ -18,17 +21,21 @@ class TestWorkoutGpxParser(unittest.TestCase):
                 self.assertEqual(vAcc, "1.133000")
                 print(f'Lon: {lon}, Lat: {lat}, Elevation: {ele}, Time: {time}, Speed: {speed}')
 
-    def test_get_lat_data(self):
+    def test_with_single_gpx_data(self):
+        # 测试，将WorkoutGpxParser的内容转换为SingleGpxData的格式
         parser = WorkoutGpxParser('route_2019-10-03_8.53am.gpx')
-        for i, data in enumerate(parser.get_lat_data(), start=1):
-            if i == 6:
-                self.assertEqual(data, '30.644586')
-
-    def test_get_time_data(self):
-        parser = WorkoutGpxParser('route_2019-10-03_8.53am.gpx')
-        for i, data in enumerate(parser.get_time_data(), start=1):
-            if i == 6:
-                self.assertEqual(data, '2019-10-03T00:50:08Z')
+        gpx_items: list[SingleGpxData] = []
+        for item in parser.get_full_data_in_dict():
+            gpx_items.append(SingleGpxData(
+                lon=item['lon'],
+                lat=item['lat'],
+                ele=item['ele'],
+                time=item['time'],
+            ))
+        self.assertEqual(gpx_items[4 - 1].lon, "114.305786")
+        self.assertEqual(gpx_items[4 - 1].ele, "27.656521")
+        self.assertEqual(gpx_items[4 - 1].datetime_utc0.date(), datetime.date(2019, 10, 3))
+        self.assertEqual(gpx_items[4 - 1].datetime_utc0.time(), datetime.time(0, 50, 6))
 
 
 if __name__ == '__main__':

@@ -4,7 +4,6 @@
 
 import datetime
 import unittest
-from typing import Any
 
 from single_gpx_data import SingleGpxData
 
