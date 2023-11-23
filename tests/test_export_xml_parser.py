@@ -11,4 +11,9 @@ class TestExportXmlParser(unittest.TestCase):
             start_date, end_date, value = record
             if start_date[:10] == '2019-10-03':
                 self.assertEqual(value, '70')
-                return 
+                break
+        for record in health_data.get_heart_rate():
+            start_date, end_date, value = record
+            if start_date == '2019-10-03 23:53:50 +0800':
+                self.assertEqual(value, '52')
+                break
