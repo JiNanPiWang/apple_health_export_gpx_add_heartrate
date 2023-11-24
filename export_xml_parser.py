@@ -21,6 +21,17 @@ class ExportXmlParser:
             self.tree = ET.parse(xml_file)
         self.root = self.tree.getroot()
 
+    def load_xml(self):
+        with open(self.health_export_xml_path, 'rb') as xml_file:
+            for event, elem in ET.iterparse(xml_file, events=('start', 'end')):
+                if event == 'start' and elem.tag == 'Record' and elem.get('type') == 'HKQuantityTypeIdentifierHeartRate':
+                    start_date = elem.get('startDate')
+                    value = elem.get('value')
+                    yield start_date, value
+
+                # 清理已处理的元素，以释放内存
+                elem.clear()
+
     def get_heart_rate(self):
         for record in self.root.findall('.//Record[@type="HKQuantityTypeIdentifierHeartRate"]'):
             start_date = record.attrib.get('startDate')
