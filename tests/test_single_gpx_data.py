@@ -5,7 +5,7 @@
 import datetime
 import unittest
 
-from single_gpx_data import SingleGpxData
+from src.single_gpx_data import SingleGpxData
 
 
 class TestSingleGpxData(unittest.TestCase):

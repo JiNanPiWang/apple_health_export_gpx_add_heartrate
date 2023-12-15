@@ -8,18 +8,15 @@ import xml.etree.ElementTree as ET
 import os
 import argparse
 
-
+# TODO：先写输出函数，输出一份不要心率的测试一下
 class ExportXmlParser:
     def __init__(self):
         # 当前路径
         self.path = os.path.dirname(__file__)
+        # 获取项目根目录
+        self.project_root = os.path.abspath(os.path.join(self.path, '..'))
         # xml路径
-        self.health_export_xml_path = os.path.join(self.path, 'apple_health_export/export.xml')
-
-        # 获取xml的信息
-        with open(self.health_export_xml_path, 'r', encoding='utf-8') as xml_file:
-            self.tree = ET.parse(xml_file)
-        self.root = self.tree.getroot()
+        self.health_export_xml_path = os.path.join(self.project_root, 'apple_health_export/export.xml')
 
     def load_xml(self):
         with open(self.health_export_xml_path, 'rb') as xml_file:
@@ -28,13 +25,3 @@ class ExportXmlParser:
                     start_date = elem.get('startDate')
                     value = elem.get('value')
                     yield start_date, value
-
-                # 清理已处理的元素，以释放内存
-                elem.clear()
-
-    def get_heart_rate(self):
-        for record in self.root.findall('.//Record[@type="HKQuantityTypeIdentifierHeartRate"]'):
-            start_date = record.attrib.get('startDate')
-            end_date = record.attrib.get('endDate')
-            value = record.attrib.get('value')
-            yield start_date, end_date, value

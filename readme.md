@@ -1,6 +1,8 @@
 ## 中文版（[English version](#English)）：
 #### 使用方法
-1. 将导出文件夹中的apple_health_export复制到根目录中
+1. 将苹果健康的数据导出并解压，可以得到一个文件夹名叫导出
+2. 将导出文件夹中的apple_health_export复制到根目录中
+3. 将apple_health_export中的 导出.xml 重命名为export.xml
 
 #### 起因：
 
@@ -41,7 +43,8 @@
 
 ## English:
 #### How to use
-1. Copy the apple health export in the export folder to root directory
+1. Export and unzip the Apple Health data, and you will get a folder named Export.
+2. Copy apple_health_export in the export folder to the root directory
 
 #### cause:
 

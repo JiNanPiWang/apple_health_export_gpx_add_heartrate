@@ -1,8 +1,8 @@
 import unittest
 import datetime
 
-from workout_gpx_parser import WorkoutGpxParser
-from single_gpx_data import SingleGpxData
+from src.workout_gpx_parser import WorkoutGpxParser
+from src.single_gpx_data import SingleGpxData
 
 
 class TestWorkoutGpxParser(unittest.TestCase):
@@ -19,7 +19,7 @@ class TestWorkoutGpxParser(unittest.TestCase):
                 self.assertEqual(course, "214.804688")
                 self.assertEqual(hAcc, "1.683047")
                 self.assertEqual(vAcc, "1.133000")
-                print(f'Lon: {lon}, Lat: {lat}, Elevation: {ele}, Time: {time}, Speed: {speed}')
+                # print(f'Lon: {lon}, Lat: {lat}, Elevation: {ele}, Time: {time}, Speed: {speed}')
 
     def test_with_single_gpx_data(self):
         # 测试，将WorkoutGpxParser的内容转换为SingleGpxData的格式
