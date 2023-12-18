@@ -6,18 +6,13 @@
 
 import xml.etree.ElementTree as ET
 import os
+from .config import WORKOUT_ROUTES
 
 
 class WorkoutGpxParser:
     def __init__(self, workout_gpx_name):
-        # argument: workout_gpx name
-        # 当前路径
-        self.path = os.path.dirname(__file__)
-        # 获取项目根目录
-        self.project_root = os.path.abspath(os.path.join(self.path, '..'))
-
         # gpx路径
-        self.workout_gpx_path = os.path.join(self.project_root, 'apple_health_export/workout-routes', workout_gpx_name)
+        self.workout_gpx_path = os.path.join(WORKOUT_ROUTES, workout_gpx_name)
 
         # 获取GPX的信息
         with open(self.workout_gpx_path, 'r') as gpx_file:
