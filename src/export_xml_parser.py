@@ -6,17 +6,13 @@
 
 import xml.etree.ElementTree as ET
 import os
-import argparse
+# 使用.config，不是config，要不然报错无法import config
+from .config import PROJECT_ROOT
 
-# TODO：先写输出函数，输出一份不要心率的测试一下
 class ExportXmlParser:
     def __init__(self):
-        # 当前路径
-        self.path = os.path.dirname(__file__)
-        # 获取项目根目录
-        self.project_root = os.path.abspath(os.path.join(self.path, '..'))
         # xml路径
-        self.health_export_xml_path = os.path.join(self.project_root, 'apple_health_export/export.xml')
+        self.health_export_xml_path = os.path.join(PROJECT_ROOT, 'apple_health_export/export.xml')
 
     def load_xml(self):
         with open(self.health_export_xml_path, 'rb') as xml_file:
