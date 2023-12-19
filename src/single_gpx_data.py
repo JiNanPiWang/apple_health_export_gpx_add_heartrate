@@ -40,6 +40,9 @@ class SingleGpxData:
                  Time_utc0: {self.datetime_utc0}\n\n"
                 )
 
+    def __getitem__(self, item):
+        return getattr(self, item)
+
     @staticmethod
     def parse_datetime(time_string):
         try:
