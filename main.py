@@ -1,12 +1,7 @@
 import os
 
-import gpxpy
-from src.workout_gpx_parser import WorkoutGpxParser
-from src.single_gpx_data import SingleGpxData
 from src.merge_gpx_data import MergeGpxData
-from src.config import PROJECT_ROOT, WORKOUT_ROUTES
-import xml.etree.ElementTree as ET
-
+from config.paths import WORKOUT_ROUTES
 
 if __name__ == '__main__':
     files = os.listdir(WORKOUT_ROUTES)

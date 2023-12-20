@@ -6,7 +6,7 @@
 
 import xml.etree.ElementTree as ET
 import os
-from .config import WORKOUT_ROUTES
+from config.paths import WORKOUT_ROUTES
 
 
 class WorkoutGpxParser:

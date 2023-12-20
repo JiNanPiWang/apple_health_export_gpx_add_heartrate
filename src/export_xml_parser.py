@@ -6,8 +6,8 @@
 
 import xml.etree.ElementTree as ET
 import os
-# 使用.config，不是config，要不然报错无法import config
-from .config import PROJECT_ROOT
+from config.paths import PROJECT_ROOT
+
 
 class ExportXmlParser:
     def __init__(self):

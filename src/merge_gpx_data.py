@@ -6,7 +6,7 @@ import os
 
 import gpxpy
 
-from .config import WORKOUT_ROUTES_WITH_HR
+from config.paths import WORKOUT_ROUTES_WITH_HR
 from .single_gpx_data import SingleGpxData
 from .workout_gpx_parser import WorkoutGpxParser
 import xml.etree.ElementTree as ET
