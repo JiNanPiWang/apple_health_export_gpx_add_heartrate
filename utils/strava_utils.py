@@ -1,4 +1,8 @@
-import stravalib
+import time
+
+from stravalib.client import Client
+from stravalib.exc import RateLimitExceeded
+from datetime import datetime
 
 
 def make_strava_client(client_id, client_secret, refresh_token):
@@ -37,15 +41,14 @@ def get_strava_last_time(client, is_milliseconds=True):
         return 0
 
 
-def upload_file_to_strava(client, file_name, data_type, force_to_run=True):
+# 需要定义传入activity_type，否则默认bike
+# possible values: ride, run, swim, workout, hike, walk, nordicski
+def upload_file_to_strava(client, file_name, data_type, activity_type='bike'):
     with open(file_name, "rb") as f:
         try:
-            if force_to_run:
-                r = client.upload_activity(
-                    activity_file=f, data_type=data_type, activity_type="run"
-                )
-            else:
-                r = client.upload_activity(activity_file=f, data_type=data_type)
+            r = client.upload_activity(
+                activity_file=f, data_type=data_type, activity_type=activity_type
+            )
 
         except RateLimitExceeded as e:
             timeout = e.timeout
@@ -53,12 +56,9 @@ def upload_file_to_strava(client, file_name, data_type, force_to_run=True):
             print(f"Strava API Rate Limit Exceeded. Retry after {timeout} seconds")
             print()
             time.sleep(timeout)
-            if force_to_run:
-                r = client.upload_activity(
-                    activity_file=f, data_type=data_type, activity_type="run"
-                )
-            else:
-                r = client.upload_activity(activity_file=f, data_type=data_type)
+            r = client.upload_activity(
+                activity_file=f, data_type=data_type, activity_type=activity_type
+            )
         print(
             f"Uploading {data_type} file: {file_name} to strava, upload_id: {r.upload_id}."
         )
