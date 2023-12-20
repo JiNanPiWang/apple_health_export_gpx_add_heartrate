@@ -19,5 +19,4 @@ if __name__ == '__main__':
         new_gpx.merge_points()
         new_gpx.save_gpx()
 
-# TODO: 自动上传到strava
         break
