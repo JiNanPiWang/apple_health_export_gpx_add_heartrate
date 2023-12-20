@@ -6,6 +6,10 @@ from datetime import datetime
 
 
 def make_strava_client(client_id, client_secret, refresh_token):
+    """
+    用于生成strava client，将内容上传到你的账户
+    Used to generate a strava client to upload content to your account
+    """
     client = Client()
 
     refresh_response = client.refresh_access_token(
@@ -15,8 +19,10 @@ def make_strava_client(client_id, client_secret, refresh_token):
     return client
 
 
+# TODO：看一下为什么默认是跑步，作用是什么
 def get_strava_last_time(client, is_milliseconds=True):
     """
+    从 Strava 客户端获取最后一次跑步活动的时间，并根据需要将时间转换为毫秒。如果出现异常或者没有找到符合条件的活动，函数会返回 0。
     if there is no activities cause exception return 0
     """
     try:
@@ -24,7 +30,6 @@ def get_strava_last_time(client, is_milliseconds=True):
         activities = client.get_activities(limit=10)
         activities = list(activities)
         activities.sort(key=lambda x: x.start_date, reverse=True)
-        # for else in python if you don't know please google it.
         for a in activities:
             if a.type == "Run":
                 activity = a
@@ -44,6 +49,10 @@ def get_strava_last_time(client, is_milliseconds=True):
 # 需要定义传入activity_type，否则默认bike
 # possible values: ride, run, swim, workout, hike, walk, nordicski
 def upload_file_to_strava(client, file_name, data_type, activity_type='bike'):
+    """
+    用于上传文件到strava
+    Used to upload files to strava
+    """
     with open(file_name, "rb") as f:
         try:
             r = client.upload_activity(

@@ -4,6 +4,16 @@
 2. 将导出文件夹中的apple_health_export复制到根目录中
 3. 将apple_health_export中的 导出.xml 重命名为export.xml
 
+#### 如果想自动上传到strava，需要补充config中的strava_api.json文件，内容如下：
+```json
+{
+    "client_id": "strava的client_id",
+    "client_secret": "strava的client_secret",
+    "refresh_token": "strava的refresh_token",
+    "activity_type": "运动类型，如run, bike, hike等"
+}
+```
+
 #### 起因：
 
 使用苹果健康导出的gpx文件，不包含心率信息，但实际上如果使用的是苹果手表记录活动，在/apple_health_export/导出.xml中包含了手表记录的心率信息。
@@ -51,6 +61,17 @@
 #### How to use(It is best to use Python3.9+)
 1. Export and unzip the Apple Health data, and you will get a folder named Export.
 2. Copy apple_health_export in the export folder to the root directory
+3. Rename export(in your language).xml in apple_health_export to export.xml
+
+#### If you want to automatically upload to strava, you need to add the strava_api.json file in the config, the content is as follows:
+```json
+{
+     "client_id": "client_id of strava",
+     "client_secret": "strava's client_secret",
+     "refresh_token": "strava's refresh_token",
+     "activity_type": "Sports type, such as run, bike, hike, etc."
+}
+```
 
 #### cause:
 
