@@ -10,7 +10,7 @@
     "client_id": "strava的client_id",
     "client_secret": "strava的client_secret",
     "refresh_token": "strava的refresh_token",
-    "activity_type": "运动类型，如run, bike, hike等"
+    "activity_type": "运动类型，如Run, Ride, Hike等"
 }
 ```
 
@@ -69,7 +69,7 @@
      "client_id": "client_id of strava",
      "client_secret": "strava's client_secret",
      "refresh_token": "strava's refresh_token",
-     "activity_type": "Sports type, such as run, bike, hike, etc."
+     "activity_type": "Sports type, such as Run, Ride, Hike, etc."
 }
 ```
 

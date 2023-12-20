@@ -46,9 +46,9 @@ def get_strava_last_time(client, is_milliseconds=True):
         return 0
 
 
-# 需要定义传入activity_type，否则默认bike
-# possible values: ride, run, swim, workout, hike, walk, nordicski
-def upload_file_to_strava(client, file_name, data_type, activity_type='bike'):
+# 需要定义传入activity_type，否则默认Ride
+# possible values: Ride, run, swim, workout, hike, walk, nordicski
+def upload_file_to_strava(client, file_name, data_type, activity_type='Ride'):
     """
     用于上传文件到strava
     Used to upload files to strava

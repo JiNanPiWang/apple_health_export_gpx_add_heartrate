@@ -5,11 +5,13 @@
 import os
 
 import gpxpy
+import json
 
 from config.paths import WORKOUT_ROUTES_WITH_HR
 from .single_gpx_data import SingleGpxData
 from .workout_gpx_parser import WorkoutGpxParser
 import xml.etree.ElementTree as ET
+from utils.strava_utils import make_strava_client, get_strava_last_time, upload_file_to_strava
 
 
 class MergeGpxData:
@@ -61,7 +63,3 @@ class MergeGpxData:
             raise ValueError("gpx is None, you need to merge points[merge_points()] first")
         with open(self.file_path, 'w') as f:
             f.write(self.content)
-
-    # TODO：上传到strava，如果没有save_gpx，就save_gpx再上传，但需提示
-    def upload_to_strava(self):
-        pass
