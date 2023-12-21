@@ -6,7 +6,7 @@ from config.paths import WORKOUT_ROUTES
 from utils.strava_utils import make_strava_client, upload_file_to_strava
 from stravalib.util.limiter import RateLimiter, XRateLimitRule
 from stravalib.client import Client, exc
-from utils.exceptions import RateLimitException
+from utils.exceptions import RateLimitException, NoInternetException
 
 def get_strava_client(access_token):
     token = access_token
@@ -63,6 +63,7 @@ class UploadGpxToStrava:
 
         for i in range(2):
             try:
+                # 如果上传成功，则会直接到底下break
                 upload = self.client.upload_activity(
                     activity_file=open(gpxfile, 'r'),
                     data_type='gpx',
@@ -70,8 +71,19 @@ class UploadGpxToStrava:
                     activity_type=self.activity_type
                 )
             except exc.RateLimitExceeded as err:
+                # 第二次循环才会直接到这里
+                # 这里是说今天已经超过了限制，退出程序
                 if i > 0:
-                    raise RateLimitException("Daily Rate limit exceeded - exiting program")
-                print("Rate limit exceeded in uploading - pausing uploads for 15 minutes to avoid rate-limit")
+                    raise RateLimitException("Daily Rate limit exceeded, please try tomorrow")
+
+                # 第一次循环会直接到这里
+                # 这里是说这一次超过了限制，等待15分钟
+                print("Rate limit exceeded in uploading - auto pausing uploads for 15 minutes to avoid rate-limit")
                 time.sleep(900)
                 continue
+            except ConnectionError as err:
+                raise NoInternetException("No Internet connection: {}".format(err))
+            break
+
+        print("Upload succeeded, waiting for response.")
+
