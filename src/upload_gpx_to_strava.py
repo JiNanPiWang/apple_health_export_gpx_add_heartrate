@@ -10,4 +10,4 @@ def upload_gpx_to_strava(file_path: str):
     client = make_strava_client(
         strava_config["client_id"], strava_config["client_secret"], strava_config["refresh_token"]
     )
-    upload_file_to_strava(client, file_path, 'gpx', 'Ride')
+    upload_file_to_strava(client, file_path, 'gpx', strava_config["activity_type"], True)
