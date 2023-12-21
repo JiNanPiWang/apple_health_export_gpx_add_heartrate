@@ -32,10 +32,13 @@ class UploadGpxToStrava:
 
         # Edit access_token in the strava_config.json or edit here
         # like access_token = '***'
+        self.file_path = file_path
         self.access_token = strava_config["access_token"]
+        self.activity_type = strava_config["activities_type"]
         self.client = get_strava_client(self.access_token)
 
-    def upload(self):
+    def get_athlete_name(self):
+        athlete = None
         for i in range(2):
             try:
                 athlete = self.client.get_athlete()
@@ -46,3 +49,29 @@ class UploadGpxToStrava:
                 time.sleep(900)
                 continue
             break
+
+        print("Now authenticated for " + athlete.firstname + " " + athlete.lastname)
+
+    # client, gpxfile, strava_activity_type, notes
+    def upload_gpx(self):
+        gpxfile = self.file_path
+        if not os.path.isfile(gpxfile):
+            print("No file found for " + gpxfile + "!")
+            return False
+
+        print("Uploading " + gpxfile)
+
+        for i in range(2):
+            try:
+                upload = self.client.upload_activity(
+                    activity_file=open(gpxfile, 'r'),
+                    data_type='gpx',
+                    private=True,
+                    activity_type=self.activity_type
+                )
+            except exc.RateLimitExceeded as err:
+                if i > 0:
+                    raise RateLimitException("Daily Rate limit exceeded - exiting program")
+                print("Rate limit exceeded in uploading - pausing uploads for 15 minutes to avoid rate-limit")
+                time.sleep(900)
+                continue

@@ -3,7 +3,7 @@ import json
 
 from src.merge_gpx_data import MergeGpxData
 from config.paths import WORKOUT_ROUTES
-from src.upload_gpx_to_strava import upload_gpx_to_strava
+from src.upload_gpx_to_strava import UploadGpxToStrava
 
 if __name__ == '__main__':
     files = os.listdir(WORKOUT_ROUTES)
@@ -15,6 +15,7 @@ if __name__ == '__main__':
         new_gpx = MergeGpxData(gpx_file)
         new_gpx.merge_points()
         new_gpx.save_gpx()
-        # upload_gpx_to_strava(new_gpx.file_path)
+        upload_to_strava = UploadGpxToStrava(new_gpx.new_file_path)
+        upload_to_strava.upload_gpx()
 
         break
