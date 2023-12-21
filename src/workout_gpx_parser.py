@@ -23,18 +23,25 @@ class WorkoutGpxParser:
     # 获取GPX的所有数据（生成器）
     def get_full_data(self):
         for trkpt in self.root.findall('.//gpx:trkpt', self.namespace):
-            lon = trkpt.attrib['lon']
-            lat = trkpt.attrib['lat']
+            try:
+                lon = trkpt.attrib['lon']
+                lat = trkpt.attrib['lat']
+            except KeyError:
+                raise KeyError('GPX file is not valid, longitude or latitude is missing')
+
             ele = trkpt.find('gpx:ele', self.namespace).text
             time = trkpt.find('gpx:time', self.namespace).text
+            if ele is None or time is None:
+                raise ValueError('GPX file is not valid, elevation or time is missing')
+
             speed = trkpt.find('gpx:extensions/gpx:speed', self.namespace).text \
-                if trkpt.find('gpx:extensions/gpx:speed', self.namespace) is not None else "N/A"
+                if trkpt.find('gpx:extensions/gpx:speed', self.namespace) is not None else None
             course = trkpt.find('gpx:extensions/gpx:course', self.namespace).text \
-                if trkpt.find('gpx:extensions/gpx:course', self.namespace) is not None else "N/A"
+                if trkpt.find('gpx:extensions/gpx:course', self.namespace) is not None else None
             hAcc = trkpt.find('gpx:extensions/gpx:hAcc', self.namespace).text \
-                if trkpt.find('gpx:extensions/gpx:hAcc', self.namespace) is not None else "N/A"
+                if trkpt.find('gpx:extensions/gpx:hAcc', self.namespace) is not None else None
             vAcc = trkpt.find('gpx:extensions/gpx:vAcc', self.namespace).text \
-                if trkpt.find('gpx:extensions/gpx:vAcc', self.namespace) is not None else "N/A"
+                if trkpt.find('gpx:extensions/gpx:vAcc', self.namespace) is not None else None
             yield lon, lat, ele, time, speed, course, hAcc, vAcc
 
     # 用字典型获取GPX的所有数据（生成器）
