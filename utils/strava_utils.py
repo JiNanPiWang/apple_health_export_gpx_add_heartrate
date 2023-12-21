@@ -19,36 +19,9 @@ def make_strava_client(client_id, client_secret, refresh_token):
     return client
 
 
-# TODO：看一下为什么默认是跑步，作用是什么
-def get_strava_last_time(client, is_milliseconds=True):
-    """
-    从 Strava 客户端获取最后一次跑步活动的时间，并根据需要将时间转换为毫秒。如果出现异常或者没有找到符合条件的活动，函数会返回 0。
-    if there is no activities cause exception return 0
-    """
-    try:
-        activity = None
-        activities = client.get_activities(limit=10)
-        activities = list(activities)
-        activities.sort(key=lambda x: x.start_date, reverse=True)
-        for a in activities:
-            if a.type == "Run":
-                activity = a
-                break
-        else:
-            return 0
-        end_date = activity.start_date + activity.elapsed_time
-        last_time = int(datetime.timestamp(end_date))
-        if is_milliseconds:
-            last_time = last_time * 1000
-        return last_time
-    except Exception as e:
-        print(f"Something wrong to get last time err: {str(e)}")
-        return 0
-
-
 # 需要定义传入activity_type，否则默认Ride
 # possible values: Ride, run, swim, workout, hike, walk, nordicski
-def upload_file_to_strava(client, file_name, data_type, activity_type='Ride'):
+def upload_file_to_strava(client, file_name, data_type, activity_type='Ride', private=True):
     """
     用于上传文件到strava
     Used to upload files to strava
@@ -56,7 +29,7 @@ def upload_file_to_strava(client, file_name, data_type, activity_type='Ride'):
     with open(file_name, "rb") as f:
         try:
             r = client.upload_activity(
-                activity_file=f, data_type=data_type, activity_type=activity_type
+                activity_file=f, data_type=data_type, activity_type=activity_type, private=private
             )
 
         except RateLimitExceeded as e:

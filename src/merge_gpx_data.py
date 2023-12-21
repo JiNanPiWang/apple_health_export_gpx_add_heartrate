@@ -11,13 +11,13 @@ from config.paths import WORKOUT_ROUTES_WITH_HR
 from .single_gpx_data import SingleGpxData
 from .workout_gpx_parser import WorkoutGpxParser
 import xml.etree.ElementTree as ET
-from utils.strava_utils import make_strava_client, get_strava_last_time, upload_file_to_strava
+from utils.strava_utils import make_strava_client, upload_file_to_strava
 
 
 class MergeGpxData:
     def __init__(self, file: str):
         self.file = file
-        self.file_path = os.path.join(WORKOUT_ROUTES_WITH_HR, f'{file[:-4]}_new.gpx')
+        self.new_file_path = os.path.join(WORKOUT_ROUTES_WITH_HR, f'{file[:-4]}_new.gpx')
         self.gpx = gpxpy.gpx.GPX()
         self.content = None
 
@@ -61,5 +61,5 @@ class MergeGpxData:
     def save_gpx(self):
         if self.content is None:
             raise ValueError("gpx is None, you need to merge points[merge_points()] first")
-        with open(self.file_path, 'w') as f:
+        with open(self.new_file_path, 'w') as f:
             f.write(self.content)
