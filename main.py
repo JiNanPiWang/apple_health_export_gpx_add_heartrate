@@ -15,6 +15,6 @@ if __name__ == '__main__':
         new_gpx = MergeGpxData(gpx_file)
         new_gpx.merge_points()
         new_gpx.save_gpx()
-        upload_gpx_to_strava(new_gpx.file_path)
+        # upload_gpx_to_strava(new_gpx.file_path)
 
         break

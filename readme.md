@@ -1,4 +1,4 @@
-## 中文版（[English version](#English)）：
+## 中文版（[English version](#English)）：(Project not finished)
 #### 使用方法（最好使用Python3.9+）
 1. 将苹果健康的数据导出并解压，可以得到一个文件夹名叫导出
 2. 将导出文件夹中的apple_health_export复制到根目录中
@@ -7,9 +7,6 @@
 #### 如果想自动上传到strava，需要补充config中的strava_api.json文件，内容如下：
 ```json
 {
-    "client_id": "strava的client_id",
-    "client_secret": "strava的client_secret",
-    "refresh_token": "strava的refresh_token",
     "activity_type": "运动类型，如Run, Ride, Hike等"
 }
 ```
@@ -66,9 +63,6 @@
 #### If you want to automatically upload to strava, you need to add the strava_api.json file in the config, the content is as follows:
 ```json
 {
-     "client_id": "client_id of strava",
-     "client_secret": "strava's client_secret",
-     "refresh_token": "strava's refresh_token",
      "activity_type": "Sports type, such as Run, Ride, Hike, etc."
 }
 ```

@@ -1,6 +1,4 @@
 {
-  "client_id": "",
-  "client_secret": "",
-  "refresh_token": "",
+  "access_token": "",
   "activities_type": "Ride"
 }
