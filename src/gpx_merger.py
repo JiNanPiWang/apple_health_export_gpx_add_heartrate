@@ -3,6 +3,7 @@
 # once only merge to one gpx file
 
 import os
+import random
 
 import gpxpy
 import json
@@ -47,12 +48,13 @@ class GpxMerger:
             )
             # TODO: 增加心率判断，从第一个在时间范围之内开始，第一个之前的时间的心率全部按第一个心率来
             # TODO：写一个heart_rate_getter，返回字典，对应时间的心率
-            gpx_extension_hr = ET.fromstring(
-                f"""<gpxtpx:TrackPointExtension xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1">
-                    <gpxtpx:hr>{60}</gpxtpx:hr>
-                    </gpxtpx:TrackPointExtension>
-                    """
-            )
+            if random.randint(-2, 2) != 0:
+                gpx_extension_hr = ET.fromstring(
+                    f"""<gpxtpx:TrackPointExtension xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1">
+                        <gpxtpx:hr>{80+random.randint(-5, 5)}</gpxtpx:hr>
+                        </gpxtpx:TrackPointExtension>
+                        """
+                )
             point.extensions.append(gpx_extension_hr)
             gpx_segment.points.append(point)
 

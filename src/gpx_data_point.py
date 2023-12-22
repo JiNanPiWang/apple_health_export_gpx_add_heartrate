@@ -9,6 +9,7 @@ from datetime import datetime, timezone, timedelta
 class GpxDataPoint:
     def __init__(self, lon=None, lat=None, ele=None, time=None, speed=None, atemp=None, hr=None, cad=None):
         self.lon = lon
+
         self.lat = lat
         self.ele = ele
         self.time = time
@@ -50,6 +51,7 @@ class GpxDataPoint:
         except ValueError:
             try:
                 # 尝试解析另一种格式
+                # 这种%z就是时区的意思，%z是+0800，%Z是CST
                 return datetime.strptime(time_string, "%Y-%m-%d %H:%M:%S %z")
             except ValueError:
                 # 如果两种格式都无法解析，返回 None
@@ -63,5 +65,5 @@ class GpxDataPoint:
                 dt_utc0 = dt.astimezone(timezone.utc)
                 return dt_utc0
             else:
-                return dt
+                return dt.replace(tzinfo=timezone.utc)
         return None

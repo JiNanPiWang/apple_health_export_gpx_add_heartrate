@@ -66,6 +66,7 @@ class StravaGpxUploader:
                     activity_file=open(gpxfile, 'r'),
                     data_type='gpx',
                     private=True,
+                    description='from Apple watch 3',
                     activity_type=self.activity_type
                 )
             except exc.RateLimitExceeded as err:

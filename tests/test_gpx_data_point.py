@@ -1,4 +1,4 @@
-# test_single_gpx_data.py
+# test_gpx_data_point.py
 # unittest for gpx_data_point.py functions
 
 
@@ -47,6 +47,24 @@ class TestSingleGpxData(unittest.TestCase):
         self.assertEqual(data1.datetime_utc0.date(), datetime.date(2023, 11, 12))
         self.assertEqual(data2.datetime_utc0.date(), datetime.date(2023, 4, 4))
         self.assertEqual(data2.datetime_utc0.time(), datetime.time(20, 29, 00))
+
+    def test_time_comparison(self):
+        time_string1 = "2023-11-12T06:50:58Z"
+        time_string2 = "2023-04-05 04:29:00 +0800"
+        time_string3 = "2023-04-05 14:29:00 +0800"
+
+        # 得到utc_0的datetime
+        data1 = GpxDataPoint(time=time_string1)
+        data1.convert_to_utc0(data1.datetime_origin)
+        data2 = GpxDataPoint(time=time_string2)
+        data2.convert_to_utc0(data2.datetime_origin)
+        data3 = GpxDataPoint(time=time_string3)
+        data3.convert_to_utc0(data3.datetime_origin)
+
+        self.assertIsNotNone(data1)
+        self.assertIsNotNone(data2)
+        self.assertIsNotNone(data3)
+        self.assertGreater(data1.datetime_utc0, data2.datetime_utc0)
 
         
 if __name__ == '__main__':

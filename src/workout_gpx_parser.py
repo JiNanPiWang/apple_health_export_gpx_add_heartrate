@@ -12,7 +12,7 @@ from config.paths import WORKOUT_ROUTES
 class WorkoutGpxParser:
     def __init__(self, workout_gpx_name, workout_gpx_path=None):
         # gpx路径
-        if workout_gpx_path is not None:
+        if workout_gpx_path is not None or workout_gpx_name is None:
             self.workout_gpx_path = workout_gpx_path
         else:
             self.workout_gpx_path = os.path.join(WORKOUT_ROUTES, workout_gpx_name)

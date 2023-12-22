@@ -17,7 +17,7 @@ if __name__ == '__main__':
 
     files = os.listdir(WORKOUT_ROUTES)
     for i, gpx_file in enumerate(files):
-        if i == 3:
+        if i == 2:
             break
         # custom your desired time
         year, month, day = int(gpx_file[6:10]), int(gpx_file[11:13]), int(gpx_file[14:16])
@@ -28,6 +28,6 @@ if __name__ == '__main__':
         new_gpx = GpxMerger(gpx_file)
         new_gpx.merge_points()
         new_gpx.save_gpx()
-        # if options.upload_to_strava:
-        #     Uploader = StravaGpxUploader(new_gpx.new_file_path)
-        #     Uploader.upload_gpx()
+        if options.upload_to_strava:
+            Uploader = StravaGpxUploader(new_gpx.new_file_path)
+            Uploader.upload_gpx()
