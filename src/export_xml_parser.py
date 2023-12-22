@@ -19,5 +19,12 @@ class ExportXmlParser:
             for event, elem in ET.iterparse(xml_file, events=('start', 'end')):
                 if event == 'start' and elem.tag == 'Record' and elem.get('type') == 'HKQuantityTypeIdentifierHeartRate':
                     start_date = elem.get('startDate')
+                    end_date = elem.get('endDate')
+                    creation_date = elem.get('creationDate')
                     value = elem.get('value')
-                    yield start_date, value
+                    yield start_date, end_date, creation_date, value
+
+    def get_full_data_in_dict(self):
+        for record in self.load_xml():
+            start_date, end_date, creation_date, value = record
+            yield {'start_date': start_date, 'end_date': end_date, 'creation_date': creation_date, 'value': value}
