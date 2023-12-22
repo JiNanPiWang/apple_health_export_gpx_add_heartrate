@@ -46,6 +46,7 @@ class GpxMerger:
                 elevation=data_trans.ele
             )
             # TODO: 增加心率判断，从第一个在时间范围之内开始，第一个之前的时间的心率全部按第一个心率来
+            # TODO：写一个heart_rate_getter，返回字典，对应时间的心率
             gpx_extension_hr = ET.fromstring(
                 f"""<gpxtpx:TrackPointExtension xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1">
                     <gpxtpx:hr>{60}</gpxtpx:hr>

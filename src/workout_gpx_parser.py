@@ -10,9 +10,12 @@ from config.paths import WORKOUT_ROUTES
 
 
 class WorkoutGpxParser:
-    def __init__(self, workout_gpx_name):
+    def __init__(self, workout_gpx_name, workout_gpx_path=None):
         # gpx路径
-        self.workout_gpx_path = os.path.join(WORKOUT_ROUTES, workout_gpx_name)
+        if workout_gpx_path is not None:
+            self.workout_gpx_path = workout_gpx_path
+        else:
+            self.workout_gpx_path = os.path.join(WORKOUT_ROUTES, workout_gpx_name)
 
         # 获取GPX的信息
         with open(self.workout_gpx_path, 'r') as gpx_file:
