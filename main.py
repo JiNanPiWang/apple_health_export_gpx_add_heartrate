@@ -17,12 +17,16 @@ if __name__ == '__main__':
 
     files = os.listdir(WORKOUT_ROUTES)
     for i, gpx_file in enumerate(files):
+        # if i == 3:
+        #     break
+        year, month, day = eval(gpx_file[6:10]), eval(gpx_file[11:13]), eval(gpx_file[14:16])
+        if year > 2019:
+            break
+
         print(f'Now processing {gpx_file}')
         new_gpx = MergeGpxData(gpx_file)
         new_gpx.merge_points()
         new_gpx.save_gpx()
-        if options.upload_to_strava:
-            upload_to_strava = UploadGpxToStrava(new_gpx.new_file_path)
-            upload_to_strava.upload_gpx()
-        if i == 2:
-            break
+        # if options.upload_to_strava:
+        #     Upload = UploadGpxToStrava(new_gpx.new_file_path)
+        #     Upload.upload_gpx()
