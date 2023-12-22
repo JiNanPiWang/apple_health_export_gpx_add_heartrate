@@ -2,7 +2,7 @@ import unittest
 import datetime
 
 from src.workout_gpx_parser import WorkoutGpxParser
-from src.single_gpx_data import SingleGpxData
+from src.gpx_data_point import GpxDataPoint
 
 
 class TestWorkoutGpxParser(unittest.TestCase):
@@ -24,9 +24,9 @@ class TestWorkoutGpxParser(unittest.TestCase):
     def test_with_single_gpx_data(self):
         # 测试，将WorkoutGpxParser的内容转换为SingleGpxData的格式
         parser = WorkoutGpxParser('route_2019-10-03_8.53am.gpx')
-        gpx_items: list[SingleGpxData] = []
+        gpx_items: list[GpxDataPoint] = []
         for item in parser.get_full_data_in_dict():
-            gpx_items.append(SingleGpxData(
+            gpx_items.append(GpxDataPoint(
                 lon=item['lon'],
                 lat=item['lat'],
                 ele=item['ele'],

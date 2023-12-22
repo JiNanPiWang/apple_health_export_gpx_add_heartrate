@@ -1,6 +1,6 @@
 import os
 import unittest
-from src.merge_gpx_data import MergeGpxData
+from src.gpx_merger import GpxMerger
 
 
 class MyTestCase(unittest.TestCase):

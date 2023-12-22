@@ -6,7 +6,7 @@
 from datetime import datetime, timezone, timedelta
 
 
-class SingleGpxData:
+class GpxDataPoint:
     def __init__(self, lon=None, lat=None, ele=None, time=None, speed=None, atemp=None, hr=None, cad=None):
         self.lon = lon
         self.lat = lat

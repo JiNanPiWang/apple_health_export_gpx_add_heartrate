@@ -2,8 +2,6 @@ import json
 import os
 import time
 
-from config.paths import WORKOUT_ROUTES
-from utils.strava_utils import make_strava_client, upload_file_to_strava
 from stravalib.util.limiter import RateLimiter, XRateLimitRule
 from stravalib.client import Client, exc
 from utils.exceptions import RateLimitException, NoInternetException
@@ -25,7 +23,7 @@ def get_strava_client(access_token):
     return client
 
 
-class UploadGpxToStrava:
+class StravaGpxUploader:
     def __init__(self, file_path: str):
         with open("config/strava_config.json", 'r') as f:
             strava_config = json.load(f)

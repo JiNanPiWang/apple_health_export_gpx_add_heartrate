@@ -1,5 +1,5 @@
-# merge_gpx_data.py
-# merge single_gpx_data.py's data
+# gpx_merger.py
+# merge gpx_data_point.py's data
 # once only merge to one gpx file
 
 import os
@@ -8,13 +8,12 @@ import gpxpy
 import json
 
 from config.paths import WORKOUT_ROUTES_WITH_HR
-from .single_gpx_data import SingleGpxData
+from .gpx_data_point import GpxDataPoint
 from .workout_gpx_parser import WorkoutGpxParser
 import xml.etree.ElementTree as ET
-from utils.strava_utils import make_strava_client, upload_file_to_strava
 
 
-class MergeGpxData:
+class GpxMerger:
     def __init__(self, file: str):
         self.file = file
         self.new_file_path = os.path.join(WORKOUT_ROUTES_WITH_HR, f'{file[:-4]}_new.gpx')
@@ -39,14 +38,14 @@ class MergeGpxData:
 
         workout_data = WorkoutGpxParser(self.file)
         for data in workout_data.get_full_data_in_dict():
-            data_trans = SingleGpxData(lon=data["lon"], lat=data["lat"], time=data["time"], ele=data["ele"])
+            data_trans = GpxDataPoint(lon=data["lon"], lat=data["lat"], time=data["time"], ele=data["ele"])
             point = gpxpy.gpx.GPXTrackPoint(
                 latitude=data_trans.lat,
                 longitude=data_trans.lon,
                 time=data_trans.datetime_utc0,
                 elevation=data_trans.ele
             )
-            # TODO: 增加心率判断
+            # TODO: 增加心率判断，从第一个在时间范围之内开始，第一个之前的时间的心率全部按第一个心率来
             gpx_extension_hr = ET.fromstring(
                 f"""<gpxtpx:TrackPointExtension xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1">
                     <gpxtpx:hr>{60}</gpxtpx:hr>

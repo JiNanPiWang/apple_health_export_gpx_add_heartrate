@@ -1,11 +1,11 @@
 # test_single_gpx_data.py
-# unittest for single_gpx_data.py functions
+# unittest for gpx_data_point.py functions
 
 
 import datetime
 import unittest
 
-from src.single_gpx_data import SingleGpxData
+from src.gpx_data_point import GpxDataPoint
 
 
 class TestSingleGpxData(unittest.TestCase):
@@ -15,9 +15,9 @@ class TestSingleGpxData(unittest.TestCase):
         time_string2 = "2023-04-05 14:29:00 +0800"
         time_string3 = "2023-04-05 14:29:00 +0800"
 
-        data_point1 = SingleGpxData(time=time_string1).parse_datetime(time_string1)
-        data_point2 = SingleGpxData(time=time_string2).parse_datetime(time_string2)
-        data_point3 = SingleGpxData(time=time_string3).parse_datetime(time_string3)
+        data_point1 = GpxDataPoint(time=time_string1).parse_datetime(time_string1)
+        data_point2 = GpxDataPoint(time=time_string2).parse_datetime(time_string2)
+        data_point3 = GpxDataPoint(time=time_string3).parse_datetime(time_string3)
 
         # 测试时间是否生成 test if time is correct produced
         self.assertIsNotNone(data_point1)
@@ -34,11 +34,11 @@ class TestSingleGpxData(unittest.TestCase):
         time_string3 = "2023-04-05 14:29:00 +0800"
 
         # 得到utc_0的datetime
-        data1 = SingleGpxData(time=time_string1)
+        data1 = GpxDataPoint(time=time_string1)
         data1.convert_to_utc0(data1.datetime_origin)
-        data2 = SingleGpxData(time=time_string2)
+        data2 = GpxDataPoint(time=time_string2)
         data2.convert_to_utc0(data2.datetime_origin)
-        data3 = SingleGpxData(time=time_string3)
+        data3 = GpxDataPoint(time=time_string3)
         data3.convert_to_utc0(data3.datetime_origin)
 
         self.assertIsNotNone(data1)
