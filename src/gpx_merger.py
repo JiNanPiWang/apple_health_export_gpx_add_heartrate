@@ -71,3 +71,4 @@ class GpxMerger:
             raise ValueError("gpx is None, you need to merge points[merge_points()] first")
         with open(self.new_file_path, 'w') as f:
             f.write(self.content)
+            print(f'{self.file} successfully processed and saved.')

@@ -84,5 +84,5 @@ class StravaGpxUploader:
                 raise NoInternetException("No Internet connection: {}".format(err))
             break
 
-        print("Upload succeeded, waiting for response.")
+        print("Upload succeeded!\n")
 
