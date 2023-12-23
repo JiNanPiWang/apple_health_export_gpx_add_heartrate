@@ -43,19 +43,38 @@ def get_heart_dict(workout_time):
 
     # 初始化last_datet为一个大值
     last_datet = datetime.max.replace(tzinfo=timezone(timedelta(hours=8)))
+    time_idx = 0
+
     for item in ExportXmlParser().get_full_data_in_dict():
         datet = GpxDataPoint(time=item['creation_date']).datetime_utc0
+        heart_rate = item['value']
 
+        # 记录下对应时间的内容
+        # 记录第一个时间点，即上一次还不在内，这一次时间在内
         if last_datet < workout_time[0] <= datet:
-            heart_dict[last_datet] = item['value']
-            heart_dict[datet] = item['value']
+            heart_dict[last_datet] = heart_rate
+            heart_dict[datet] = heart_rate
+            while workout_time[time_idx] <= datet:
+                heart_dict[workout_time[time_idx]] = heart_rate
+                time_idx += 1
+
+        # 正常情况，时间在范围内
         elif workout_time[0] <= datet <= workout_time[-1]:
-            heart_dict[datet] = item['value']
+            heart_dict[datet] = heart_rate
+            while workout_time[time_idx] <= datet:
+                heart_dict[workout_time[time_idx]] = heart_rate
+                time_idx += 1
+
+        # 最后一个时间点，上一次还在，这一次不在
         elif last_datet <= workout_time[-1] < datet:
-            heart_dict[datet] = item['value']
+            heart_dict[datet] = heart_rate
+            while time_idx < len(workout_time) and workout_time[time_idx] <= datet:
+                heart_dict[workout_time[time_idx]] = heart_rate
+                time_idx += 1
             break
 
         last_datet = datet
+
     return heart_dict
 
 
