@@ -1,7 +1,10 @@
+import os.path
+
 from .workout_gpx_parser import WorkoutGpxParser
 from .gpx_data_point import GpxDataPoint
 from .export_xml_parser import ExportXmlParser
 from datetime import datetime, timezone, timedelta
+from config.paths import WORKOUT_ROUTES
 
 
 def get_workout_time(file_path):
@@ -16,7 +19,7 @@ def get_workout_time(file_path):
 
 def get_heartrate_list(workout_time):
     heartrate_list = []
-    
+
     # 初始化last_datet为一个大值
     last_datet = datetime.max.replace(tzinfo=timezone.utc)
     for item in ExportXmlParser().get_full_data_in_dict():
@@ -57,8 +60,11 @@ def get_heart_dict(workout_time):
 
 
 class HeartRateGetter:
-    def __init__(self, file_path):
-        self.file_path = file_path
+    def __init__(self, file_path, file_name=None):
+        if file_name is not None:
+            self.file_path = os.path.join(WORKOUT_ROUTES, file_name)
+        else:
+            self.file_path = file_path
         self.time = get_workout_time(self.file_path)
         # self.heartrate_list = get_heartrate_list(self.time)
         self.heartrate_dict = get_heart_dict(self.time)

@@ -17,5 +17,14 @@ class MyTestCase(unittest.TestCase):
         pass
 
 
+    def test_get_heartrate_list1(self):
+        heart_rate_getter = HeartRateGetter(None, file_name='route_2019-10-03_4.05pm.gpx')
+        tmp_time = datetime(2019, 10, 3, 8, 2, 21)
+        tmp_time = tmp_time.replace(tzinfo=timezone.utc)
+        self.assertEqual(int(heart_rate_getter.heartrate_dict[tmp_time]),
+                         91)
+        pass
+
+
 if __name__ == '__main__':
     unittest.main()
