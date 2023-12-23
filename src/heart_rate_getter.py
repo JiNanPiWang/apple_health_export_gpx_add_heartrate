@@ -18,7 +18,7 @@ def get_heartrate_list(workout_time):
     heartrate_list = []
     
     # 初始化last_datet为一个大值
-    last_datet = datetime.max.replace(tzinfo=timezone(timedelta(hours=8)))
+    last_datet = datetime.max.replace(tzinfo=timezone.utc)
     for item in ExportXmlParser().get_full_data_in_dict():
         datet = GpxDataPoint(time=item['creation_date']).datetime_utc0
 
@@ -35,9 +35,31 @@ def get_heartrate_list(workout_time):
     return heartrate_list
 
 
+def get_heart_dict(workout_time):
+    heart_dict = {}
+
+    # 初始化last_datet为一个大值
+    last_datet = datetime.max.replace(tzinfo=timezone(timedelta(hours=8)))
+    for item in ExportXmlParser().get_full_data_in_dict():
+        datet = GpxDataPoint(time=item['creation_date']).datetime_utc0
+
+        if last_datet < workout_time[0] <= datet:
+            heart_dict[last_datet] = item['value']
+            heart_dict[datet] = item['value']
+        elif workout_time[0] <= datet <= workout_time[-1]:
+            heart_dict[datet] = item['value']
+        elif last_datet <= workout_time[-1] < datet:
+            heart_dict[datet] = item['value']
+            break
+
+        last_datet = datet
+    return heart_dict
+
+
 class HeartRateGetter:
     def __init__(self, file_path):
         self.file_path = file_path
         self.time = get_workout_time(self.file_path)
-        self.heartrate_list = get_heartrate_list(self.time)
+        # self.heartrate_list = get_heartrate_list(self.time)
+        self.heartrate_dict = get_heart_dict(self.time)
         pass
