@@ -12,7 +12,7 @@ class TestExportXmlParser(unittest.TestCase):
         self.health_data = ExportXmlParser()
 
     def test_load_xml(self):
-        for start_date, value in self.health_data.load_xml():
+        for start_date, end_date, creation_date, value in self.health_data.load_heart_rate():
             if start_date == '2023-09-06 19:35:24 +0800':
                 self.assertEqual(value, '154')
             if start_date == '2019-12-05 15:28:13 +0800':

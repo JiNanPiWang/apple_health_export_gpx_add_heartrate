@@ -22,7 +22,7 @@ def get_heartrate_list(workout_time):
 
     # 初始化last_datet为一个大值
     last_datet = datetime.max.replace(tzinfo=timezone.utc)
-    for item in ExportXmlParser().get_full_data_in_dict():
+    for item in ExportXmlParser().load_heart_rate_in_dict():
         datet = GpxDataPoint(time=item['creation_date']).datetime_utc0
 
         if last_datet < workout_time[0] <= datet:
@@ -45,7 +45,7 @@ def get_heart_dict(workout_time):
     last_datet = datetime.max.replace(tzinfo=timezone.utc)
     current_time = workout_time[0]
 
-    for item in ExportXmlParser().get_full_data_in_dict():
+    for item in ExportXmlParser().load_heart_rate_in_dict():
         datet = GpxDataPoint(time=item['creation_date']).datetime_utc0
         heart_rate = item['value']
 
