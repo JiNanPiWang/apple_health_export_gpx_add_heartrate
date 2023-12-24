@@ -54,8 +54,12 @@ class GpxDataPoint:
                 # 这种%z就是时区的意思，%z是+0800，%Z是CST
                 return datetime.strptime(time_string, "%Y-%m-%d %H:%M:%S %z")
             except ValueError:
-                # 如果两种格式都无法解析，返回 None
-                return None
+                try:
+                    # 尝试解析类似 2019-10-23_9.24pm 的格式
+                    return datetime.strptime(time_string, "%Y-%m-%d_%I.%M%p")
+                except ValueError:
+                    # 如果三种格式都无法解析，返回 None
+                    return None
 
     @staticmethod
     def convert_to_utc0(dt):
