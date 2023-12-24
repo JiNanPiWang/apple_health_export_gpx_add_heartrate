@@ -47,9 +47,10 @@ class ExportXmlParser:
         with open(self.health_export_xml_path, 'rb') as xml_file:
             for event, elem in ET.iterparse(xml_file, events=('start', 'end')):
                 if event == 'start' and elem.tag == 'Workout':
+                    start_date = elem.get('startDate')
                     end_date = elem.get('endDate')
                     activity_type = elem.get('workoutActivityType')
-                    yield end_date, activity_type
+                    yield start_date, end_date, activity_type
 
     def load_activities_type_in_dict(self, files: list[str]):
         """
@@ -58,5 +59,5 @@ class ExportXmlParser:
         :return:
         """
         for record in self.load_activities_type(files):
-            end_date, activity_type = record
-            yield {'end_date': end_date, 'activity_type': activity_type}
+            start_date, end_date, activity_type = record
+            yield {'start_date': start_date, 'end_date': end_date, 'activity_type': activity_type}
