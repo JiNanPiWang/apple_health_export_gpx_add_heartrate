@@ -4,6 +4,8 @@ import os
 from src.gpx_merger import GpxMerger
 from config.paths import WORKOUT_ROUTES
 from src.strava_gpx_uploader import StravaGpxUploader
+from src.export_xml_parser import ExportXmlParser
+from src.sport_type_getter import get_sport_type
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -16,6 +18,9 @@ if __name__ == '__main__':
     options = parser.parse_args()
 
     files = os.listdir(WORKOUT_ROUTES)
+
+    workout_type = get_sport_type(files)
+
     for i, gpx_file in enumerate(files):
         if i == 2:
             break
@@ -29,5 +34,5 @@ if __name__ == '__main__':
         new_gpx.merge_points()
         new_gpx.save_gpx()
         if options.upload_to_strava:
-            Uploader = StravaGpxUploader(new_gpx.new_file_path)
+            Uploader = StravaGpxUploader(new_gpx.new_file_path, workout_type[gpx_file])
             Uploader.upload_gpx()

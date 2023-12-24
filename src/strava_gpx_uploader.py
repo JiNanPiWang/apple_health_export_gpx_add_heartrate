@@ -6,6 +6,7 @@ from stravalib.util.limiter import RateLimiter, XRateLimitRule
 from stravalib.client import Client, exc
 from utils.exceptions import RateLimitException, NoInternetException
 
+
 def get_strava_client(access_token):
     token = access_token
     rate_limiter = RateLimiter()
@@ -24,7 +25,7 @@ def get_strava_client(access_token):
 
 
 class StravaGpxUploader:
-    def __init__(self, file_path: str):
+    def __init__(self, file_path: str, activity_type):
         with open("config/strava_config.json", 'r') as f:
             strava_config = json.load(f)
 
@@ -32,7 +33,7 @@ class StravaGpxUploader:
         # like access_token = '***'
         self.file_path = file_path
         self.access_token = strava_config["access_token"]
-        self.activity_type = strava_config["activities_type"]
+        self.activity_type = activity_type
         self.client = get_strava_client(self.access_token)
 
     def get_athlete_name(self):
@@ -85,4 +86,3 @@ class StravaGpxUploader:
             break
 
         print("Upload succeeded!\n")
-
