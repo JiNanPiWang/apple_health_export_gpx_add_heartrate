@@ -24,9 +24,6 @@ class GpxDataPoint:
         # 转换到UTC+0时区
         self.datetime_utc0 = self.convert_to_utc0(self.datetime_origin) if self.datetime_origin else None
 
-        # 提取日期和时间部分
-        self.date_part = self.datetime_utc0.strftime("%Y-%m-%d") if self.datetime_utc0 else None
-        self.time_part = self.datetime_utc0.strftime("%H:%M:%S") if self.datetime_utc0 else None
 
     def __str__(self):
         return (f"Lon: {self.lon}, \

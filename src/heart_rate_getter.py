@@ -37,7 +37,8 @@ def get_heartrate_list(workout_time):
         last_datet = datet
     return heartrate_list
 
-
+# TODO：部分运动在结束之后，心率才记录，而且后面记录的心率应该是前面的内容，也就是心率数值漂移了
+# 比如10月10日9:46am的
 def get_heart_dict(workout_time):
     heart_dict = {}
 
