@@ -21,7 +21,7 @@ def parse_date_to_filename(end_date):
     :return: file_name
     """
     _date = GpxDataPoint(time=end_date).datetime_origin
-    
+
     # 解读：小时使用%#I：12小时制，#使得小时前面不带0，使用%H则是24小时制；%p：AM/PM，lower()，将%P转为小写
     parsed_date = _date.strftime("%Y-%m-%d_%#I.%M%p").lower()
     file_name = f'route_{parsed_date}.gpx'
@@ -45,6 +45,12 @@ def parse_date_from_filename(file_name):
 # TODO: 很多activity type都找不到，如果时间在startDate和endDate之间，就将中间的activity type设为这个activity type
 # 比如route_2019-10-23_12.08pm，但creation_date和end_date都是2019-10-23 12:09
 def get_sport_type(files: list[str]):
+    """
+    Get workout type for almost all files, exclude files that are uploaded via Strava, etc
+    Apple Watch's record is fine
+    :param files: list of uploading files
+    :return: dict, key is file name, value is workout type
+    """
     print('Start getting workout type for all files')
     type_dict = {}
     for record in ExportXmlParser().load_activities_type_in_dict(files):
@@ -53,17 +59,26 @@ def get_sport_type(files: list[str]):
         #     'activity_type':'HKWorkoutActivityTypeCycling',
         #     'end_date':'2019-10-03 08:53:38 +0800'
         # }
-        file_name = parse_date_to_filename(record['end_date'])
-        try:
-            strava_type = type_trans[record['activity_type']]
-        except KeyError:
-            print('Unsupported activity type, you can change its type in strava manually.\n'
-                  f'{file_name}\'s type default set to workout type')
-            strava_type = 'Workout'
-        type_dict[file_name] = strava_type
+        start_date = record['start_date']
+        end_date = record['end_date']
+        sport_type = record['activity_type']
 
-    # TODO：在最后遍历所有文件，如果文件不在字典中，就找时间在startDate和endDate之间
+        date_range = (start_date, end_date)
+        type_dict[date_range] = sport_type
+
+    file_types = {}
+    for file in files:
+        file_time = parse_date_from_filename(file)
+        for item in type_dict.items():
+            start_date = GpxDataPoint(time=item[0][0]).datetime_origin
+            end_date = GpxDataPoint(time=item[0][1]).datetime_origin
+            if start_date <= file_time <= end_date:
+                file_types[file] = item[1]
+                break
+        else:
+            # Get workout type for almost all files, exclude files that are uploaded via Strava, etc
+            # set default type to 'Workout'
+            file_types[file] = 'Workout'
 
     print('Successfully get workout type for all files')
-    return type_dict
-
+    return file_types
