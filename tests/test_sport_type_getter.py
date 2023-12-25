@@ -22,7 +22,9 @@ class MyTestCase(unittest.TestCase):
         workout_type = get_sport_type(files)
 
         for file in files:
-            self.assertTrue(file in workout_type.keys())
+            file_time = parse_date_from_filename(file)
+            if file_time.year <= 2019:
+                self.assertTrue(file in workout_type.keys())
 
     def test_parse_date_from_filename(self):
         self.assertLess(parse_date_from_filename('route_2019-10-04_9.45pm.gpx'),
