@@ -2,24 +2,26 @@
 
 #### 使用方法
 
-##### 1. 将苹果健康的数据导出并解压，可以得到一个文件夹名叫`导出`
+##### 1. 将苹果健康的数据导出，可参考[百度经验](https://jingyan.baidu.com/article/e9fb46e167cc6b3421f766e1.html)，并发送到您的电脑上，解压后可以得到一个文件夹名叫`导出`
 
-##### 2. 将导出文件夹中的apple_health_export复制到根目录中
+##### 2. 将导出文件夹中的apple_health_export复制到本项目的根目录中
 
 ##### 3. 将apple_health_export中的 导出.xml 重命名为export.xml
 
-##### 4. 如果需要将导出的内容自动上传到strava，请进行以下操作：
+##### 4. 如果您需要将导出的内容自动上传到strava，请进行以下操作：
 
 4.1 创建你自己的strava应用，进入[Strava API](https://www.strava.com/settings/api)
 创建应用，创建完毕后你可以看到`客户 ID`和`客户端密钥`这两个内容
 
-4.2 运行`python utils/strava_local_client.py get_write_token <client_id> <client_secret>`，
+4.2 运行`python3 utils/strava_local_client.py get_write_token <client_id> <client_secret>`，
 其中，将<client_id>替换为你看到的`客户 ID`，<client_secret>替换为`客户端密钥`
 
 4.3
 运行后，你会在终端看到一个网址，打开它，登录你的strava账号，然后会跳转到一个网页，
-网页中会有一行内容，复制这个网页中的那一行内容，然后粘贴到config/strava_config.json
+网页中会有一行内容，复制这个网页中的那一行内容，然后粘贴到本项目的config/strava_config.json
 中的`access_token`中
+
+##### 5. 运行`python3 main.py`，即可得到加入了心率的gpx文件，如果您想要将生成文件的上传到您的strava账户，请您运行`python3 main.py --upload-to-strava`
 
 #### 起因：
 
