@@ -40,26 +40,44 @@
 
 没有running_page，我就不会开始这个项目。没有strava-uploader，这里也不会有自动上传到strava的功能。
 
-## English(Translation not finished):
+## English:
 
-#### How to use
+### Instructions
 
-1. Export and unzip the Apple Health data, and you will get a folder named Export.
-2. Copy apple_health_export in the export folder to the root directory
-3. Rename export(in your language).xml in apple_health_export to export.xml
+#### 1. To export Apple Health data, please refer to [Baidu Experience](https://jingyan.baidu.com/article/e9fb46e167cc6b3421f766e1.html) and send it to your computer. After decompression, you can get a The folder name is `Export`
 
-#### cause:
+#### 2. Copy apple_health_export in the export folder to the root directory of this project
 
-The gpx file exported using Apple Health does not contain heart rate information. However, if an Apple Watch is actually
-used to record activities, /apple_health_export/export.xml contains the heart rate information recorded by the watch.
+#### 3. Rename export.xml in apple_health_export to export.xml
 
-#### What the program does:
+#### 4. If you need to automatically upload the exported content to strava, please do the following:
 
-The purpose of this program is to add heart rate information to the exported gpx file and upload it to other platforms
-such as strava.
+4.1 Create your own strava application and enter [Strava API](https://www.strava.com/settings/api)
+Create the application. After creation, you can see the two contents `Customer ID` and `Client Key`
+
+4.2 Run `python3 utils/strava_local_client.py get_write_token <client_id> <client_secret>`,
+Among them, replace <client_id> with the `client ID` you see, and replace <client_secret> with `client secret`
+
+4.3
+After running, you will see a URL in the terminal, open it, log in to your strava account, and then jump to a web page,
+There will be a line of content in the web page. Copy that line of content in the web page and paste it into the config/strava_config.json of this project.
+`access_token` in
+
+#### 5. Run `python3 main.py` to get the gpx file with heart rate added. If you want to upload the generated file to your strava account, please run `python3 main.py --upload -to-strava`
+
+### Cause:
+
+Past exercise records from Apple Watch cannot be automatically transferred to Strava. Even if a gpx file is exported using Apple Health, it does not contain heart rate information.
+But in fact, if you use an Apple watch to record activities, /apple_health_export/export.xml contains the information recorded by the watch.
+Heart rate information.
+
+### Function:
+
+The purpose of this program is to add heart rate information to the exported gpx file and automatically upload it to strava.
 
 ------
 
-Thanks to yihong0618's project [[running_page](https://github.com/yihong0618/running_page)]
+Sincere thanks to yihong0618 for his project [[running_page](https://github.com/yihong0618/running_page)]
+and barrald's project [[strava-uploader](https://github.com/barrald/strava-uploader)]
 
-Without running_page, I would not have started this project.
+I wouldn't have started this project without running_page. Without strava-uploader, there will be no automatic upload to strava function.
