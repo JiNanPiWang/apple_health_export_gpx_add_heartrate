@@ -22,8 +22,8 @@ if __name__ == '__main__':
     workout_type = get_sport_type(files)
 
     for i, gpx_file in enumerate(files):
-        if i == 20:
-            break
+        # if i == 2:
+        #     break # upload a few for test
         # custom your desired time
         year, month, day = int(gpx_file[6:10]), int(gpx_file[11:13]), int(gpx_file[14:16])
         if year > 2019:

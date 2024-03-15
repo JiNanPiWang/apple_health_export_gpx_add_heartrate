@@ -60,7 +60,14 @@ def get_sport_type(files: list[str]):
         # }
         start_date = record['start_date']
         end_date = record['end_date']
-        sport_type = record['activity_type']
+
+        # Get workout type for almost all files, exclude files that are uploaded via Strava, etc
+        # set default type to 'Workout'
+        try:
+            ori_sport_type = record['activity_type']
+            sport_type = type_trans[ori_sport_type]
+        except KeyError:
+            sport_type = 'Workout'
 
         date_range = (start_date, end_date)
         type_dict[date_range] = sport_type
@@ -74,10 +81,6 @@ def get_sport_type(files: list[str]):
             if start_date <= file_time <= end_date:
                 file_types[file] = item[1]
                 break
-        else:
-            # Get workout type for almost all files, exclude files that are uploaded via Strava, etc
-            # set default type to 'Workout'
-            file_types[file] = 'Workout'
 
     print('Successfully get workout type for all files')
     return file_types
