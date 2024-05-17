@@ -8,20 +8,26 @@
 
 #### 3. 将apple_health_export中的 导出.xml 重命名为export.xml
 
-#### 4. 如果您需要将导出的内容自动上传到strava，请进行以下操作：
+#### 4. 在项目目录下确保您拥有Python3环境，并执行以下命令安装所需依赖：
 
-4.1 创建你自己的strava应用，进入[Strava API](https://www.strava.com/settings/api)
+```bash
+pip3 install -r requirements.txt
+```
+
+#### 5. 如果您需要将导出的内容自动上传到strava，请进行以下操作：
+
+5.1 创建你自己的strava应用，进入[Strava API](https://www.strava.com/settings/api)
 创建应用，创建完毕后你可以看到`客户 ID`和`客户端密钥`这两个内容
 
-4.2 运行`python3 utils/strava_local_client.py get_write_token <client_id> <client_secret>`，
+5.2 运行`python3 utils/strava_local_client.py get_write_token <client_id> <client_secret>`，
 其中，将<client_id>替换为你看到的`客户 ID`，<client_secret>替换为`客户端密钥`
 
-4.3
+5.3
 运行后，你会在终端看到一个网址，打开它，登录你的strava账号，然后会跳转到一个网页，
 网页中会有一行内容，复制这个网页中的那一行内容，然后粘贴到本项目的config/strava_config.json
 中的`access_token`中
 
-#### 5. 运行`python3 main.py`，即可得到加入了心率的gpx文件，如果您想要将生成文件的上传到您的strava账户，请您运行`python3 main.py --upload-to-strava`
+#### 6. 运行`python3 main.py`，即可得到加入了心率的gpx文件，如果您想要将生成文件的上传到您的strava账户，请您运行`python3 main.py --upload-to-strava`
 
 ### 起因：
 
@@ -50,20 +56,26 @@
 
 #### 3. Rename export.xml in apple_health_export to export.xml
 
-#### 4. If you need to automatically upload the exported content to strava, please do the following:
+#### 4. Before proceeding to the next step, please ensure that you have Python3 environment installed on your computer (Python 3.10 version is recommended). Install the required dependencies by running the following command in the project root directory:
 
-4.1 Create your own strava application and enter [Strava API](https://www.strava.com/settings/api)
+```bash
+pip3 install -r requirements.txt
+```
+
+#### 5. If you need to automatically upload the exported content to strava, please do the following (if not, please skip directly to step 5):
+
+5.1 Create your own strava application and enter [Strava API](https://www.strava.com/settings/api)
 Create the application. After creation, you can see the two contents `Customer ID` and `Client Key`
 
-4.2 Run `python3 utils/strava_local_client.py get_write_token <client_id> <client_secret>`,
+5.2 Run `python3 utils/strava_local_client.py get_write_token <client_id> <client_secret>`,
 Among them, replace <client_id> with the `client ID` you see, and replace <client_secret> with `client secret`
 
-4.3
+5.3
 After running, you will see a URL in the terminal, open it, log in to your strava account, and then jump to a web page,
 There will be a line of content in the web page. Copy that line of content in the web page and paste it into the config/strava_config.json of this project.
 `access_token` in
 
-#### 5. Run `python3 main.py` to get the gpx file with heart rate added. If you want to upload the generated file to your strava account, please run `python3 main.py --upload -to-strava`
+#### 6. Run `python3 main.py` to get the gpx file with heart rate added. If you want to upload the generated file to your strava account, please run `python3 main.py --upload -to-strava`
 
 ### Cause:
 
