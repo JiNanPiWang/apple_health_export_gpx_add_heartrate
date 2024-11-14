@@ -39,6 +39,10 @@ pip3 install -r requirements.txt
 
 本程序的目的是将心率信息加入至导出的gpx文件中，并可以自动上传至strava。
 
+### 待办：
+
+分析发现，导出.xml中部分苹果记录的心率时间与实际运动时间有偏差，运动的那个时间段，没有心率记录，运动结束后才有，整体的心率记录时间向后偏移了很多。由于没找出规律，暂时还没想到什么方法来解决这个。
+
 ------
 
 衷心感谢yihong0618的项目[[running_page](https://github.com/yihong0618/running_page)]
@@ -86,6 +90,10 @@ Heart rate information.
 ### Function:
 
 The purpose of this program is to add heart rate information to the exported gpx file and automatically upload it to strava.
+
+### TODO:
+
+Analysis found that the heart rate time recorded by some Apple devices in the exported .xml file was deviated from the actual exercise time. There was no heart rate record during the exercise period, but only after the exercise ended. The overall heart rate record time was shifted a lot backwards. Since no pattern was found, no method has been found to solve this problem yet.
 
 ------
 
